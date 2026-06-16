@@ -1,9 +1,11 @@
 package com.app.ecomerce_api.model;
 
+import com.app.ecomerce_api.dto.ProductRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,4 +34,13 @@ public class Product {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public Product(@Valid ProductRequest productRequest) {
+        this.name = productRequest.getName();
+        this.description = productRequest.getDescription();
+        this.price = productRequest.getPrice();
+        this.stockQuantity = productRequest.getStockQuantity();
+        this.category = productRequest.getCategory();
+        this.imageUrl = productRequest.getImageUrl();
+    }
 }
