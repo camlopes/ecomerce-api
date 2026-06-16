@@ -1,5 +1,6 @@
 package com.app.ecomerce_api.controller;
 
+import com.app.ecomerce_api.dto.UpdateUserRequest;
 import com.app.ecomerce_api.dto.UserResponse;
 import com.app.ecomerce_api.dto.UserRequest;
 import com.app.ecomerce_api.service.UserService;
@@ -38,8 +39,8 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable Long id,
-                                             @RequestBody UserRequest userRequest){
-        boolean updated = userService.updateUser(id, userRequest);
+                                             @RequestBody UpdateUserRequest updateUserRequest){
+        boolean updated = userService.updateUser(id, updateUserRequest);
         if (updated)
             return ResponseEntity.ok("User updated successfully");
         return ResponseEntity.notFound().build();

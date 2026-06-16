@@ -1,6 +1,7 @@
 package com.app.ecomerce_api.service;
 
 import com.app.ecomerce_api.dto.AddressDTO;
+import com.app.ecomerce_api.dto.UpdateUserRequest;
 import com.app.ecomerce_api.dto.UserResponse;
 import com.app.ecomerce_api.dto.UserRequest;
 import com.app.ecomerce_api.model.User;
@@ -52,14 +53,14 @@ public class UserService {
         return userRepository.findById(id).map(this::convertToUserResponse);
     }
 
-    public boolean updateUser(Long id, UserRequest userRequest) {
-        User updatedUser = new User(userRequest);
-        return userRepository.findById(id)
-                .map(existingUser -> {
-                    existingUser.setFirstName(updatedUser.getFirstName());
-                    existingUser.setLastName(updatedUser.getLastName());
-                    userRepository.save(existingUser);
-                    return true;
-        }).orElse(false);
+    public boolean updateUser(Long id, UpdateUserRequest updateUserRequest) {
+        Optional<User> findUser = userRepository.findById(id);
+        if (findUser.isEmpty()) {
+            return false;
+        } else {
+            findUser.get().updateUser(updateUserRequest);
+            userRepository.save(findUser.get());
+            return true;
+        }
     }
 }

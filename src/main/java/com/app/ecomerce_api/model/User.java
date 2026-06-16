@@ -1,5 +1,6 @@
 package com.app.ecomerce_api.model;
 
+import com.app.ecomerce_api.dto.UpdateUserRequest;
 import com.app.ecomerce_api.dto.UserRequest;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -45,5 +46,26 @@ public class User {
         }
 
         this.address = new Address(userRequest.getAddress());
+    }
+
+    public void updateUser(UpdateUserRequest updateUserRequest) {
+        if (updateUserRequest.getFirstName() != null) {
+            this.firstName = updateUserRequest.getFirstName();
+        }
+        if (updateUserRequest.getLastName() != null) {
+            this.lastName = updateUserRequest.getLastName();
+        }
+        if (updateUserRequest.getEmail() != null) {
+            this.email = updateUserRequest.getEmail();
+        }
+        if (updateUserRequest.getPhone() != 0) {
+            this.phone = updateUserRequest.getPhone();
+        }
+        if (updateUserRequest.getRole() != null) {
+            this.role = updateUserRequest.getRole();
+        }
+        if (updateUserRequest.getAddress() != null) {
+            this.address.updateAddress(updateUserRequest.getAddress());
+        }
     }
 }
