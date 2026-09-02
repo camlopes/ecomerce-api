@@ -7,10 +7,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +21,12 @@ public class ProductController {
     public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductRequest productRequest){
         return new ResponseEntity<ProductResponse>(productService.createProduct(productRequest),
                                                     HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductRequest productRequest){
+        Optional<ProductResponse> updatedProduct = productService.updateProduct(id, productRequest);
+        return updatedProduct.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
