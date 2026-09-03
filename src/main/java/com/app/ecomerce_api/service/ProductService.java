@@ -45,4 +45,13 @@ public class ProductService {
                 .map(ProductResponse::new)
                 .toList();
     }
+
+    public boolean deleteProduct(Long id) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    product.setIsActive(false);
+                    productRepository.save(product);
+                    return true;
+                }).orElse(false);
+    }
 }
