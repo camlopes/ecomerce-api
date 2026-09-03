@@ -4,10 +4,9 @@ import com.app.ecomerce_api.dto.ProductRequest;
 import com.app.ecomerce_api.dto.ProductResponse;
 import com.app.ecomerce_api.model.Product;
 import com.app.ecomerce_api.repository.ProductRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +38,11 @@ public class ProductService {
                     Product savedProduct = productRepository.save(existingProduct);
                     return new ProductResponse(savedProduct);
                 });
+    }
+
+    public List<ProductResponse> getAllProducts() {
+        return productRepository.findByIsActiveTrue().stream()
+                .map(ProductResponse::new)
+                .toList();
     }
 }
