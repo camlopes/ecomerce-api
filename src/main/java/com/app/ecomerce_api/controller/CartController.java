@@ -22,4 +22,14 @@ public class CartController {
             return ResponseEntity.badRequest().body("Product Out of Stock or User not found or Product not found");
         }
     }
+
+    @DeleteMapping("/items/{productId}")
+    public ResponseEntity<String> removeFromCart(@RequestHeader("X-User-ID") String userId, @PathVariable Long productId) {
+        boolean deleted = cartService.deleteItemFromCart(userId, productId);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

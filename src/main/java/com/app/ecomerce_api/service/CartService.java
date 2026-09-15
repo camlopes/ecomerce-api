@@ -56,4 +56,29 @@ public class CartService {
         }
         return true;
     }
+
+    public boolean deleteItemFromCart(String userId, Long productId) {
+        // Check for user existence
+        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
+        if (userOpt.isEmpty())
+            return false;
+
+        User user = userOpt.get();
+
+        // Check for product existence
+        Optional<Product> productOpt = productRepository.findById(productId);
+        if (productOpt.isEmpty())
+            return false;
+
+        Product product = productOpt.get();
+
+        // Find the cart item
+        CartItem cartItem = cartItemRepository.findByUserAndProduct(user, product);
+        if (cartItem == null)
+            return false;
+
+        // Delete the cart item
+        cartItemRepository.delete(cartItem);
+        return true;
+    }
 }
