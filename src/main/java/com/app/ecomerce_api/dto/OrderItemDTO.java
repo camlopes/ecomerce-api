@@ -15,7 +15,7 @@ public class OrderItemDTO {
     @NotNull
     private Integer quantity;
     @NotNull
-    private BigDecimal price;
+    private BigDecimal totalPrice;
     @NotNull
-    private BigDecimal subtotal;
+    private BigDecimal productPrice;
 }
